@@ -1,14 +1,18 @@
 :root {
   color-scheme: light dark;
-  /* "Noto Sans CJK KR" matches the fonts-noto-cjk package installed on the
+  /* "Noto Color Emoji" goes FIRST: font fallback picks the first font in
+     the list that has *any* glyph for a character, and CJK fonts like Noto
+     Sans CJK KR include plain black-and-white glyphs for older symbols
+     (e.g. the ☀/☔ weather dingbats), so they'd otherwise win over the
+     color emoji font and render monochrome. Noto Color Emoji has no
+     Korean/Latin glyphs at all, so it never interferes with text - it's
+     only ever matched for emoji/symbol characters.
+     "Noto Sans CJK KR" matches the fonts-noto-cjk package installed on the
      FullPageOS kiosk, so it renders instantly there with no network wait.
-     "Noto Sans KR" (Google Fonts) is the fallback for every other device.
-     "Noto Color Emoji" is listed so the weather/outfit emoji pick up the
-     fonts-noto-color-emoji package once it's installed on the kiosk;
-     without it Linux falls back to a monochrome outline glyph. */
-  font-family: "Noto Sans CJK KR", "Noto Sans KR", "Pretendard",
-    "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system,
-    "Noto Color Emoji", sans-serif;
+     "Noto Sans KR" (Google Fonts) is the fallback for every other device. */
+  font-family: "Noto Color Emoji", "Noto Sans CJK KR", "Noto Sans KR",
+    "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui,
+    -apple-system, sans-serif;
 
   --bg-start: #8ec9ff;
   --bg-end: #eef7ff;
