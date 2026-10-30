@@ -1,18 +1,33 @@
+/* Scope the color emoji font to ONLY the emoji/symbol codepoints via
+   unicode-range, instead of naming "Noto Color Emoji" directly in the
+   font stack. Putting a color emoji font first in a plain font-family
+   list made Chromium apply its (much wider, square) glyph metrics to
+   EVERY character that font also happens to contain a glyph for -
+   including bare digits 0-9 (used for keycap emoji like 0️⃣), which is
+   why dates/numbers turned into small colorful dots with huge gaps
+   between every character. unicode-range makes the browser only ever
+   consult this font for codepoints in range, leaving digits/Hangul/Latin
+   completely untouched. */
+@font-face {
+  font-family: "AppEmoji";
+  src: local("Noto Color Emoji");
+  unicode-range: U+2600-27BF, U+2B00-2BFF, U+1F300-1F9FF, U+1FA70-1FAFF,
+    U+FE0F, U+200D;
+}
+
 :root {
   color-scheme: light dark;
-  /* "Noto Color Emoji" goes FIRST: font fallback picks the first font in
-     the list that has *any* glyph for a character, and CJK fonts like Noto
-     Sans CJK KR include plain black-and-white glyphs for older symbols
-     (e.g. the ☀/☔ weather dingbats), so they'd otherwise win over the
-     color emoji font and render monochrome. Noto Color Emoji has no
-     Korean/Latin glyphs at all, so it never interferes with text - it's
-     only ever matched for emoji/symbol characters.
+  /* "AppEmoji" (see above) is tried first but only matches real emoji, so
+     it can't interfere with digits/Hangul/Latin. Without it (or on a
+     device missing the Noto Color Emoji font), emoji fall through to
+     whichever later font has a glyph, often in monochrome - a graceful
+     degradation, not a crash.
      "Noto Sans CJK KR" matches the fonts-noto-cjk package installed on the
      FullPageOS kiosk, so it renders instantly there with no network wait.
      "Noto Sans KR" (Google Fonts) is the fallback for every other device. */
-  font-family: "Noto Color Emoji", "Noto Sans CJK KR", "Noto Sans KR",
-    "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui,
-    -apple-system, sans-serif;
+  font-family: "AppEmoji", "Noto Sans CJK KR", "Noto Sans KR", "Pretendard",
+    "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system,
+    sans-serif;
 
   --bg-start: #8ec9ff;
   --bg-end: #eef7ff;
