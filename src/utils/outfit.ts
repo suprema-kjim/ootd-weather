@@ -1,3 +1,5 @@
+import { getPm10Level, getPm25Level, getUvLevel, isBadDustLevel } from "./airQuality";
+
 export interface OutfitRecommendation {
   category: string; // e.g. "매우 더움"
   items: string[];
@@ -27,7 +29,10 @@ export function getOutfitRecommendation(
   apparentTemperature: number,
   weatherCode: number,
   windSpeed: number,
-  precipitationProbability?: number
+  precipitationProbability?: number,
+  uvIndex?: number,
+  pm10?: number,
+  pm25?: number
 ): OutfitRecommendation {
   const t = apparentTemperature;
   let category: string;
@@ -81,8 +86,22 @@ export function getOutfitRecommendation(
     tips.push("바람이 꽤 불어요. 겉옷을 챙기는 게 좋겠어요. 💨");
   }
 
-  if (t >= 30) {
+  if (uvIndex !== undefined) {
+    const uvLevel = getUvLevel(uvIndex);
+    if (uvLevel === "높음" || uvLevel === "매우 높음" || uvLevel === "위험") {
+      tips.push(`자외선이 ${uvLevel} 수준이에요. 선크림과 양산을 챙기세요. 🧴`);
+    }
+  } else if (t >= 30) {
     tips.push("자외선이 강할 수 있어요. 선크림과 양산을 챙기세요. 🧴");
+  }
+
+  const pm10Level = pm10 !== undefined ? getPm10Level(pm10) : undefined;
+  const pm25Level = pm25 !== undefined ? getPm25Level(pm25) : undefined;
+  if (
+    (pm10Level && isBadDustLevel(pm10Level)) ||
+    (pm25Level && isBadDustLevel(pm25Level))
+  ) {
+    tips.push("미세먼지가 나쁨 수준이에요. 마스크를 착용하세요. 😷");
   }
 
   return { category, items, tips };

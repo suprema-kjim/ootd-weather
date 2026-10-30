@@ -2,6 +2,7 @@ import type { CurrentWeather as CurrentWeatherData, DailyWeather } from "../type
 import { getWeatherInfo } from "../utils/weatherCode";
 import { getOutfitRecommendation } from "../utils/outfit";
 import { getClothingEmoji } from "../utils/clothingEmoji";
+import { getPm10Level, getPm25Level, getUvLevel } from "../utils/airQuality";
 
 interface Props {
   current: CurrentWeatherData;
@@ -14,7 +15,10 @@ export function CurrentWeather({ current, today }: Props) {
     current.apparentTemperature,
     current.weatherCode,
     current.windSpeed,
-    today.precipitationProbability
+    today.precipitationProbability,
+    current.uvIndex,
+    current.pm10,
+    current.pm25
   );
 
   return (
@@ -45,6 +49,24 @@ export function CurrentWeather({ current, today }: Props) {
         <div className="stat">
           <span className="stat-label">풍속</span>
           <span className="stat-value">{Math.round(current.windSpeed)}km/h</span>
+        </div>
+        {current.pm10 !== undefined && (
+          <div className="stat">
+            <span className="stat-label">미세먼지</span>
+            <span className="stat-value">{getPm10Level(current.pm10)}</span>
+          </div>
+        )}
+        {current.pm25 !== undefined && (
+          <div className="stat">
+            <span className="stat-label">초미세먼지</span>
+            <span className="stat-value">{getPm25Level(current.pm25)}</span>
+          </div>
+        )}
+        <div className="stat">
+          <span className="stat-label">자외선</span>
+          <span className="stat-value">
+            {getUvLevel(current.uvIndex)} {Math.round(current.uvIndex)}
+          </span>
         </div>
       </div>
 

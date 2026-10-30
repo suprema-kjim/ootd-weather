@@ -6,6 +6,10 @@ export interface CurrentWeather {
   precipitation: number;
   weatherCode: number;
   windSpeed: number;
+  uvIndex: number;
+  /** Undefined when the separate air-quality request failed. */
+  pm10?: number;
+  pm25?: number;
 }
 
 export interface DailyWeather {

@@ -3,6 +3,7 @@ import { LOCATION, REFRESH_INTERVAL_MS } from "../constants";
 import type { DailyWeather, WeatherData } from "../types";
 
 const API_URL = "https://api.open-meteo.com/v1/forecast";
+const AIR_QUALITY_API_URL = "https://air-quality-api.open-meteo.com/v1/air-quality";
 
 function buildUrl(): string {
   const params = new URLSearchParams({
@@ -12,11 +13,21 @@ function buildUrl(): string {
     past_days: "1",
     forecast_days: "7",
     current:
-      "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m",
+      "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,uv_index",
     daily:
       "weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max",
   });
   return `${API_URL}?${params.toString()}`;
+}
+
+function buildAirQualityUrl(): string {
+  const params = new URLSearchParams({
+    latitude: String(LOCATION.latitude),
+    longitude: String(LOCATION.longitude),
+    timezone: LOCATION.timezone,
+    current: "pm10,pm2_5",
+  });
+  return `${AIR_QUALITY_API_URL}?${params.toString()}`;
 }
 
 interface OpenMeteoResponse {
@@ -28,6 +39,7 @@ interface OpenMeteoResponse {
     precipitation: number;
     weather_code: number;
     wind_speed_10m: number;
+    uv_index: number;
   };
   daily: {
     time: string[];
@@ -38,6 +50,25 @@ interface OpenMeteoResponse {
     precipitation_probability_max: number[];
     wind_speed_10m_max: number[];
   };
+}
+
+interface AirQualityResponse {
+  current: {
+    pm10: number;
+    pm2_5: number;
+  };
+}
+
+/** Air quality comes from a separate API; fetch failures here shouldn't break the rest of the page. */
+async function fetchAirQuality(): Promise<AirQualityResponse["current"] | null> {
+  try {
+    const res = await fetch(buildAirQualityUrl());
+    if (!res.ok) return null;
+    const data: AirQualityResponse = await res.json();
+    return data.current;
+  } catch {
+    return null;
+  }
 }
 
 function toDailyWeather(data: OpenMeteoResponse["daily"], i: number): DailyWeather {
@@ -53,7 +84,7 @@ function toDailyWeather(data: OpenMeteoResponse["daily"], i: number): DailyWeath
 }
 
 async function fetchWeather(): Promise<WeatherData> {
-  const res = await fetch(buildUrl());
+  const [res, airQuality] = await Promise.all([fetch(buildUrl()), fetchAirQuality()]);
   if (!res.ok) {
     throw new Error(`날씨 정보를 가져오지 못했어요. (HTTP ${res.status})`);
   }
@@ -76,6 +107,9 @@ async function fetchWeather(): Promise<WeatherData> {
       precipitation: data.current.precipitation,
       weatherCode: data.current.weather_code,
       windSpeed: data.current.wind_speed_10m,
+      uvIndex: data.current.uv_index,
+      pm10: airQuality?.pm10,
+      pm25: airQuality?.pm2_5,
     },
     yesterday,
     today,
