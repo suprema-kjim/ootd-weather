@@ -112,7 +112,7 @@ body[data-period="night"] {
 
 .header-location {
   margin: 0 0 4px;
-  font-size: 21px;
+  font-size: 18px;
   color: var(--header-muted);
   font-weight: 500;
   transition: color 2s ease;
@@ -120,7 +120,7 @@ body[data-period="night"] {
 
 .header-date {
   margin: 0;
-  font-size: 33px;
+  font-size: 28.5px;
   font-weight: 700;
   color: var(--header-text);
   transition: color 2s ease;
@@ -128,7 +128,7 @@ body[data-period="night"] {
 
 .header-time {
   margin: 4px 0 0;
-  font-size: 22.5px;
+  font-size: 19.5px;
   color: var(--header-muted);
   font-variant-numeric: tabular-nums;
   transition: color 2s ease;
@@ -171,26 +171,26 @@ body[data-period="night"] {
 }
 
 .current-icon {
-  font-size: 84px;
+  font-size: 73px;
   line-height: 1;
 }
 
 .current-label {
   margin: 0;
-  font-size: 22.5px;
+  font-size: 19.5px;
   color: var(--text-muted);
 }
 
 .current-temp {
   margin: 2px 0;
-  font-size: 60px;
+  font-size: 52px;
   font-weight: 700;
   line-height: 1.1;
 }
 
 .current-feels {
   margin: 0;
-  font-size: 19.5px;
+  font-size: 17px;
   color: var(--text-muted);
 }
 
@@ -211,12 +211,12 @@ body[data-period="night"] {
 }
 
 .stat-label {
-  font-size: 18px;
+  font-size: 15.5px;
   color: var(--text-muted);
 }
 
 .stat-value {
-  font-size: 22.5px;
+  font-size: 19.5px;
   font-weight: 600;
 }
 
@@ -230,7 +230,7 @@ body[data-period="night"] {
 .outfit-category {
   margin: 0 0 10px;
   font-weight: 700;
-  font-size: 22.5px;
+  font-size: 19.5px;
 }
 
 .outfit-items {
@@ -244,14 +244,14 @@ body[data-period="night"] {
   color: var(--accent);
   border-radius: 999px;
   padding: 6px 12px;
-  font-size: 19.5px;
+  font-size: 17px;
   font-weight: 600;
 }
 
 .outfit-tips {
   margin: 12px 0 0;
   padding-left: 18px;
-  font-size: 19.5px;
+  font-size: 17px;
   color: var(--text-muted);
   display: flex;
   flex-direction: column;
@@ -261,7 +261,7 @@ body[data-period="night"] {
 /* Section cards (yesterday / week) */
 .section-title {
   margin: 0 0 14px;
-  font-size: 24px;
+  font-size: 21px;
   font-weight: 700;
 }
 
@@ -273,22 +273,22 @@ body[data-period="night"] {
 }
 
 .yesterday-icon {
-  font-size: 42px;
+  font-size: 36.5px;
 }
 
 .yesterday-label {
   flex: 1;
-  font-size: 21px;
+  font-size: 18px;
   color: var(--text-muted);
 }
 
 .yesterday-temp {
   font-weight: 600;
-  font-size: 21px;
+  font-size: 18px;
 }
 
 .yesterday-rain {
-  font-size: 19.5px;
+  font-size: 17px;
   color: var(--text-muted);
 }
 
@@ -303,12 +303,12 @@ body[data-period="night"] {
 
 .week-row {
   display: grid;
-  grid-template-columns: 84px 42px 1fr 66px 105px;
+  grid-template-columns: 73px 36.5px 1fr 57px 91px;
   align-items: center;
   gap: 8px;
   padding: 10px 0;
   border-bottom: 1px solid var(--card-border);
-  font-size: 19.5px;
+  font-size: 17px;
 }
 
 .week-row:last-child {
@@ -320,7 +320,7 @@ body[data-period="night"] {
 }
 
 .week-icon {
-  font-size: 27px;
+  font-size: 23.5px;
   text-align: center;
 }
 
@@ -354,7 +354,7 @@ body[data-period="night"] {
   gap: 8px;
   padding-top: 4px;
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: 15.5px;
 }
 
 .footer button {
@@ -363,7 +363,7 @@ body[data-period="night"] {
   color: white;
   padding: 8px 16px;
   border-radius: 999px;
-  font-size: 19.5px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
 }
