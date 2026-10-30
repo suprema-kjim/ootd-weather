@@ -145,8 +145,8 @@ body[data-period="night"] {
 }
 
 .section-card {
-  padding-top: 28px;
-  padding-bottom: 28px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .loading-card,
