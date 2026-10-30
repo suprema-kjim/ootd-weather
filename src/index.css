@@ -1,7 +1,11 @@
 :root {
   color-scheme: light dark;
-  font-family: "Noto Sans KR", "Pretendard", "Apple SD Gothic Neo",
-    "Malgun Gothic", system-ui, -apple-system, sans-serif;
+  /* "Noto Sans CJK KR" matches the fonts-noto-cjk package installed on the
+     FullPageOS kiosk, so it renders instantly there with no network wait.
+     "Noto Sans KR" (Google Fonts) is the fallback for every other device. */
+  font-family: "Noto Sans CJK KR", "Noto Sans KR", "Pretendard",
+    "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system,
+    sans-serif;
 
   --bg-start: #8ec9ff;
   --bg-end: #eef7ff;
