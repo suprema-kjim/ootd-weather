@@ -93,7 +93,6 @@ body[data-period="night"] {
 
 .app {
   width: 80%;
-  max-width: 480px;
   margin: 0 auto;
   padding: 28px 16px 48px;
   display: flex;
