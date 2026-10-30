@@ -5,13 +5,13 @@
 
   --bg-start: #8ec9ff;
   --bg-end: #eef7ff;
-  --card-bg: #ffffff;
-  --card-border: rgba(15, 23, 42, 0.08);
+  --card-bg: rgba(255, 255, 255, 0.68);
+  --card-border: rgba(15, 23, 42, 0.1);
   --text-main: #0f172a;
   --text-muted: #64748b;
   --accent: #2563eb;
-  --accent-soft: #e0ecff;
-  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --accent-soft: rgba(37, 99, 235, 0.14);
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
 
   /* Header text sits directly on the time-of-day gradient, so its contrast
      is driven by the period below rather than by prefers-color-scheme. */
@@ -23,12 +23,12 @@
   :root {
     --bg-start: #0b1220;
     --bg-end: #111827;
-    --card-bg: #1a2436;
-    --card-border: rgba(255, 255, 255, 0.08);
+    --card-bg: rgba(26, 36, 54, 0.58);
+    --card-border: rgba(255, 255, 255, 0.1);
     --text-main: #f1f5f9;
     --text-muted: #94a3b8;
     --accent: #60a5fa;
-    --accent-soft: rgba(96, 165, 250, 0.15);
+    --accent-soft: rgba(96, 165, 250, 0.18);
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   }
 }
@@ -97,7 +97,7 @@ body[data-period="night"] {
   padding: 28px 16px 48px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 36px;
 }
 
 /* Header */
@@ -136,6 +136,8 @@ body[data-period="night"] {
 .error-card,
 .loading-card {
   background: var(--card-bg);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid var(--card-border);
   border-radius: 20px;
   box-shadow: var(--shadow);

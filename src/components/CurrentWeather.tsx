@@ -1,6 +1,7 @@
 import type { CurrentWeather as CurrentWeatherData, DailyWeather } from "../types";
 import { getWeatherInfo } from "../utils/weatherCode";
 import { getOutfitRecommendation } from "../utils/outfit";
+import { getClothingEmoji } from "../utils/clothingEmoji";
 
 interface Props {
   current: CurrentWeatherData;
@@ -52,7 +53,7 @@ export function CurrentWeather({ current, today }: Props) {
         <div className="outfit-items">
           {outfit.items.map((item) => (
             <span key={item} className="outfit-chip">
-              {item}
+              <span aria-hidden="true">{getClothingEmoji(item)}</span> {item}
             </span>
           ))}
         </div>
