@@ -1,31 +1,18 @@
-/* Scope the color emoji font to ONLY the emoji/symbol codepoints via
-   unicode-range, instead of naming "Noto Color Emoji" directly in the
-   font stack. Putting a color emoji font first in a plain font-family
-   list made Chromium apply its (much wider, square) glyph metrics to
-   EVERY character that font also happens to contain a glyph for -
-   including bare digits 0-9 (used for keycap emoji like 0️⃣), which is
-   why dates/numbers turned into small colorful dots with huge gaps
-   between every character. unicode-range makes the browser only ever
-   consult this font for codepoints in range, leaving digits/Hangul/Latin
-   completely untouched. */
-@font-face {
-  font-family: "AppEmoji";
-  src: local("Noto Color Emoji");
-  unicode-range: U+2600-27BF, U+2B00-2BFF, U+1F300-1F9FF, U+1FA70-1FAFF,
-    U+FE0F, U+200D;
-}
-
 :root {
   color-scheme: light dark;
-  /* "AppEmoji" (see above) is tried first but only matches real emoji, so
-     it can't interfere with digits/Hangul/Latin. Without it (or on a
-     device missing the Noto Color Emoji font), emoji fall through to
-     whichever later font has a glyph, often in monochrome - a graceful
-     degradation, not a crash.
+  /* IMPORTANT: do not add a color emoji font (e.g. "Noto Color Emoji") to
+     this list, even at the end, and do not try to scope one in via
+     @font-face + unicode-range. On the FullPageOS kiosk's Chromium build,
+     unicode-range is not honored for local() font sources, so the emoji
+     font ends up matching bare digits too (it also has keycap-digit
+     glyphs), which broke text spacing across the whole page. Emoji icons
+     are instead colorized per-element via .icon-emoji (see below), which
+     keeps the color font completely out of any element that also renders
+     Korean/digit text.
      "Noto Sans CJK KR" matches the fonts-noto-cjk package installed on the
      FullPageOS kiosk, so it renders instantly there with no network wait.
      "Noto Sans KR" (Google Fonts) is the fallback for every other device. */
-  font-family: "AppEmoji", "Noto Sans CJK KR", "Noto Sans KR", "Pretendard",
+  font-family: "Noto Sans CJK KR", "Noto Sans KR", "Pretendard",
     "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system,
     sans-serif;
 
@@ -192,6 +179,7 @@ body[data-period="night"] {
 .current-icon {
   font-size: 73px;
   line-height: 1;
+  font-family: "Noto Color Emoji", sans-serif;
 }
 
 .current-label {
@@ -267,6 +255,13 @@ body[data-period="night"] {
   font-weight: 600;
 }
 
+/* Scoped color-emoji font, applied only to elements that render nothing
+   but an emoji character - see the note in :root for why it must never
+   be in the page-wide font-family list. */
+.icon-emoji {
+  font-family: "Noto Color Emoji", sans-serif;
+}
+
 .outfit-tips {
   margin: 12px 0 0;
   padding-left: 18px;
@@ -293,6 +288,7 @@ body[data-period="night"] {
 
 .yesterday-icon {
   font-size: 36.5px;
+  font-family: "Noto Color Emoji", sans-serif;
 }
 
 .yesterday-label {
@@ -341,6 +337,7 @@ body[data-period="night"] {
 .week-icon {
   font-size: 23.5px;
   text-align: center;
+  font-family: "Noto Color Emoji", sans-serif;
 }
 
 .week-condition {

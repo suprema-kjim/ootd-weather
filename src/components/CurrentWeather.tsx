@@ -75,7 +75,10 @@ export function CurrentWeather({ current, today }: Props) {
         <div className="outfit-items">
           {outfit.items.map((item) => (
             <span key={item} className="outfit-chip">
-              <span aria-hidden="true">{getClothingEmoji(item)}</span> {item}
+              <span className="icon-emoji" aria-hidden="true">
+                {getClothingEmoji(item)}
+              </span>{" "}
+              {item}
             </span>
           ))}
         </div>
