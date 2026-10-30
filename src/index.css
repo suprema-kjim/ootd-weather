@@ -3,8 +3,8 @@
   font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui,
     -apple-system, sans-serif;
 
-  --bg-start: #dff1ff;
-  --bg-end: #f7fbff;
+  --bg-start: #8ec9ff;
+  --bg-end: #eef7ff;
   --card-bg: #ffffff;
   --card-border: rgba(15, 23, 42, 0.08);
   --text-main: #0f172a;
@@ -12,6 +12,11 @@
   --accent: #2563eb;
   --accent-soft: #e0ecff;
   --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+
+  /* Header text sits directly on the time-of-day gradient, so its contrast
+     is driven by the period below rather than by prefers-color-scheme. */
+  --header-text: #0f172a;
+  --header-muted: rgba(15, 23, 42, 0.62);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,7 +46,45 @@ body {
 body {
   min-height: 100vh;
   background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 60%);
+  background-attachment: fixed;
   color: var(--text-main);
+  transition: background 2s ease;
+}
+
+/* Time-of-day background themes, applied via document.body.dataset.period */
+body[data-period="dawn"] {
+  --bg-start: #4b4a8e;
+  --bg-end: #f5b9a4;
+  --header-text: #fff7f2;
+  --header-muted: rgba(255, 247, 242, 0.75);
+}
+
+body[data-period="morning"] {
+  --bg-start: #bfe3ff;
+  --bg-end: #fdf6e3;
+  --header-text: #0f172a;
+  --header-muted: rgba(15, 23, 42, 0.6);
+}
+
+body[data-period="day"] {
+  --bg-start: #7cc0ff;
+  --bg-end: #eaf6ff;
+  --header-text: #0f172a;
+  --header-muted: rgba(15, 23, 42, 0.6);
+}
+
+body[data-period="evening"] {
+  --bg-start: #35396b;
+  --bg-end: #f3916a;
+  --header-text: #fff7f2;
+  --header-muted: rgba(255, 247, 242, 0.78);
+}
+
+body[data-period="night"] {
+  --bg-start: #05070f;
+  --bg-end: #1b2545;
+  --header-text: #f1f5f9;
+  --header-muted: rgba(241, 245, 249, 0.65);
 }
 
 #root {
@@ -51,10 +94,10 @@ body {
 .app {
   max-width: 480px;
   margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 28px 16px 48px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
 
 /* Header */
@@ -66,21 +109,25 @@ body {
 .header-location {
   margin: 0 0 4px;
   font-size: 14px;
-  color: var(--text-muted);
+  color: var(--header-muted);
   font-weight: 500;
+  transition: color 2s ease;
 }
 
 .header-date {
   margin: 0;
   font-size: 22px;
   font-weight: 700;
+  color: var(--header-text);
+  transition: color 2s ease;
 }
 
 .header-time {
   margin: 4px 0 0;
   font-size: 15px;
-  color: var(--text-muted);
+  color: var(--header-muted);
   font-variant-numeric: tabular-nums;
+  transition: color 2s ease;
 }
 
 /* Shared card look */

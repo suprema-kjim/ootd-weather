@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { Header } from "./components/Header";
 import { CurrentWeather } from "./components/CurrentWeather";
 import { YesterdayWeather } from "./components/YesterdayWeather";
 import { WeeklyForecast } from "./components/WeeklyForecast";
 import { useWeather } from "./hooks/useWeather";
+import { useClock } from "./hooks/useClock";
+import { getTimePeriod } from "./utils/timeOfDay";
 
 function formatUpdatedAt(iso: string): string {
   return new Date(iso).toLocaleTimeString("ko-KR", { hour12: true });
@@ -10,10 +13,17 @@ function formatUpdatedAt(iso: string): string {
 
 function App() {
   const { data, loading, error, refresh } = useWeather();
+  const now = useClock();
+  const period = getTimePeriod(now);
+
+  // Drive the full-page background gradient from the current time of day.
+  useEffect(() => {
+    document.body.dataset.period = period;
+  }, [period]);
 
   return (
     <div className="app">
-      <Header />
+      <Header now={now} />
 
       <main className="main">
         {error && (

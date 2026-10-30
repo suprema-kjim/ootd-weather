@@ -1,4 +1,3 @@
-import { useClock } from "../hooks/useClock";
 import { LOCATION } from "../constants";
 
 const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
@@ -15,9 +14,11 @@ function formatTime(date: Date): string {
   return date.toLocaleTimeString("ko-KR", { hour12: true });
 }
 
-export function Header() {
-  const now = useClock();
+interface Props {
+  now: Date;
+}
 
+export function Header({ now }: Props) {
   return (
     <header className="header">
       <p className="header-location">📍 {LOCATION.name}</p>
