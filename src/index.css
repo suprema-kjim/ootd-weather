@@ -1,0 +1,323 @@
+:root {
+  color-scheme: light dark;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui,
+    -apple-system, sans-serif;
+
+  --bg-start: #dff1ff;
+  --bg-end: #f7fbff;
+  --card-bg: #ffffff;
+  --card-border: rgba(15, 23, 42, 0.08);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent: #2563eb;
+  --accent-soft: #e0ecff;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-start: #0b1220;
+    --bg-end: #111827;
+    --card-bg: #1a2436;
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --accent: #60a5fa;
+    --accent-soft: rgba(96, 165, 250, 0.15);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 60%);
+  color: var(--text-main);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 12px 0 4px;
+}
+
+.header-location {
+  margin: 0 0 4px;
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.header-date {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.header-time {
+  margin: 4px 0 0;
+  font-size: 15px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Shared card look */
+.current-card,
+.section-card,
+.error-card,
+.loading-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.loading-card,
+.error-card {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.error-card button {
+  margin-top: 10px;
+}
+
+/* Current weather */
+.current-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.current-icon {
+  font-size: 56px;
+  line-height: 1;
+}
+
+.current-label {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.current-temp {
+  margin: 2px 0;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.current-feels {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.current-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--card-border);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Outfit box */
+.outfit-box {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--card-border);
+}
+
+.outfit-category {
+  margin: 0 0 10px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.outfit-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.outfit-chip {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.outfit-tips {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Section cards (yesterday / week) */
+.section-title {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Yesterday */
+.yesterday-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.yesterday-icon {
+  font-size: 28px;
+}
+
+.yesterday-label {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.yesterday-temp {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.yesterday-rain {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Weekly forecast */
+.week-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: 56px 28px 1fr 44px 70px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 13px;
+}
+
+.week-row:last-child {
+  border-bottom: none;
+}
+
+.week-day {
+  font-weight: 600;
+}
+
+.week-icon {
+  font-size: 18px;
+  text-align: center;
+}
+
+.week-condition {
+  color: var(--text-muted);
+}
+
+.week-rain {
+  color: var(--accent);
+  text-align: right;
+}
+
+.week-temp {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.week-temp-max {
+  font-weight: 700;
+}
+
+.week-temp-min {
+  color: var(--text-muted);
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.footer button {
+  border: none;
+  background: var(--accent);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.footer button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.footer-note {
+  opacity: 0.8;
+}
+
+button {
+  font-family: inherit;
+}
