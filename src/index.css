@@ -144,6 +144,11 @@ body[data-period="night"] {
   padding: 20px;
 }
 
+.section-card {
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+
 .loading-card,
 .error-card {
   text-align: center;
