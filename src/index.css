@@ -50,7 +50,6 @@ body {
 body {
   min-height: 100vh;
   background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 60%);
-  background-attachment: fixed;
   color: var(--text-main);
   transition: background 2s ease;
 }
@@ -139,9 +138,11 @@ body[data-period="night"] {
 .section-card,
 .error-card,
 .loading-card {
+  /* backdrop-filter is omitted on purpose: on weaker GPUs (e.g. Raspberry
+     Pi / FullPageOS kiosks) a blurred backdrop layer can fail to composite
+     and paints the whole card solid white instead of translucent. The
+     rgba() background alone still gives a tinted, see-through card. */
   background: var(--card-bg);
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
   border: 1px solid var(--card-border);
   border-radius: 20px;
   box-shadow: var(--shadow);
