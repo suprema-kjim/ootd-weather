@@ -292,7 +292,7 @@ body[data-period="night"] {
    there. Tips render separately below the stat bars (see .outfit-tips). */
 .current-outfit-inline {
   flex: 1 1 180px;
-  max-width: 230px;
+  max-width: 478px;
 }
 
 .outfit-category {
