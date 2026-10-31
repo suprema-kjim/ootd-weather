@@ -111,6 +111,23 @@ body[data-period="night"] {
   gap: 40px;
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Today's weather and yesterday's weather sit side by side, each taking
+   half the width. align-items: start keeps each card at its own natural
+   height instead of stretching the much shorter yesterday card to match
+   today's taller one. */
+.today-yesterday-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
 /* Header */
 .header {
   text-align: center;
@@ -152,11 +169,6 @@ body[data-period="night"] {
   border-radius: 20px;
   box-shadow: var(--shadow);
   padding: 20px;
-}
-
-.section-card {
-  margin-top: 8px;
-  margin-bottom: 8px;
 }
 
 .loading-card,
@@ -280,30 +292,63 @@ body[data-period="night"] {
 }
 
 /* Yesterday */
-.yesterday-row {
+.yesterday-summary {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .yesterday-icon {
-  font-size: 36.5px;
+  font-size: 30px;
   font-family: "Noto Color Emoji", sans-serif;
 }
 
 .yesterday-label {
-  flex: 1;
-  font-size: 18px;
+  margin: 0;
+  font-size: 15px;
   color: var(--text-muted);
 }
 
 .yesterday-temp {
-  font-weight: 600;
+  margin: 2px 0 0;
+  font-weight: 700;
   font-size: 18px;
 }
 
+.yesterday-hourly {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  justify-content: space-between;
+}
+
+.yesterday-hourly li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.hourly-time {
+  color: var(--text-muted);
+}
+
+.hourly-icon {
+  font-size: 19px;
+  font-family: "Noto Color Emoji", sans-serif;
+}
+
+.hourly-temp {
+  font-weight: 600;
+  font-size: 14px;
+}
+
 .yesterday-rain {
-  font-size: 17px;
+  margin: 14px 0 0;
+  font-size: 13px;
   color: var(--text-muted);
 }
 

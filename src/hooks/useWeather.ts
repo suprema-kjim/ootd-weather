@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LOCATION, REFRESH_INTERVAL_MS } from "../constants";
-import type { DailyWeather, WeatherData } from "../types";
+import type { DailyWeather, HourlyPoint, WeatherData } from "../types";
+
+/** Hours of the day sampled for the "yesterday" hourly trend strip. */
+const YESTERDAY_SAMPLE_HOURS = [0, 6, 12, 18];
 
 const API_URL = "https://api.open-meteo.com/v1/forecast";
 const AIR_QUALITY_API_URL = "https://air-quality-api.open-meteo.com/v1/air-quality";
@@ -16,6 +19,7 @@ function buildUrl(): string {
       "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,uv_index",
     daily:
       "weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max",
+    hourly: "temperature_2m,weather_code",
   });
   return `${API_URL}?${params.toString()}`;
 }
@@ -49,6 +53,11 @@ interface OpenMeteoResponse {
     precipitation_sum: number[];
     precipitation_probability_max: number[];
     wind_speed_10m_max: number[];
+  };
+  hourly: {
+    time: string[];
+    temperature_2m: number[];
+    weather_code: number[];
   };
 }
 
@@ -98,6 +107,14 @@ async function fetchWeather(): Promise<WeatherData> {
     .slice(1)
     .map((_, idx) => toDailyWeather(data.daily, idx + 1));
 
+  // Hourly data starts at midnight of the first day (yesterday), one entry
+  // per hour, so indices 0-23 are yesterday's 24 hours.
+  const yesterdayHourly: HourlyPoint[] = YESTERDAY_SAMPLE_HOURS.map((hour) => ({
+    time: data.hourly.time[hour],
+    temperature: data.hourly.temperature_2m[hour],
+    weatherCode: data.hourly.weather_code[hour],
+  }));
+
   return {
     current: {
       time: data.current.time,
@@ -112,6 +129,7 @@ async function fetchWeather(): Promise<WeatherData> {
       pm25: airQuality?.pm2_5,
     },
     yesterday,
+    yesterdayHourly,
     today,
     week,
     fetchedAt: new Date().toISOString(),

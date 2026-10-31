@@ -22,9 +22,16 @@ export interface DailyWeather {
   windSpeedMax: number;
 }
 
+export interface HourlyPoint {
+  time: string;
+  temperature: number;
+  weatherCode: number;
+}
+
 export interface WeatherData {
   current: CurrentWeather;
   yesterday: DailyWeather;
+  yesterdayHourly: HourlyPoint[]; // 00/06/12/18h snapshots, in time order
   today: DailyWeather;
   week: DailyWeather[]; // today + next 6 days (7 entries)
   fetchedAt: string;

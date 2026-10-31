@@ -39,8 +39,10 @@ function App() {
 
         {data && (
           <>
-            <CurrentWeather current={data.current} today={data.today} />
-            <YesterdayWeather yesterday={data.yesterday} />
+            <div className="today-yesterday-row">
+              <CurrentWeather current={data.current} today={data.today} />
+              <YesterdayWeather yesterday={data.yesterday} hourly={data.yesterdayHourly} />
+            </div>
             <WeeklyForecast week={data.week} />
 
             <footer className="footer">
