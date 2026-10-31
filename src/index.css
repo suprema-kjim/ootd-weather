@@ -173,6 +173,14 @@ body[data-period="night"] {
 /* Current weather */
 .current-main {
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.current-main-primary {
+  display: flex;
   align-items: center;
   gap: 16px;
 }
@@ -216,57 +224,95 @@ body[data-period="night"] {
   color: var(--text-muted);
 }
 
-.current-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  row-gap: 16px;
+/* Stat bars: 습도/강수확률/풍속/미세먼지/초미세먼지/자외선 */
+.stat-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   margin-top: 18px;
   padding-top: 16px;
   border-top: 1px solid var(--card-border);
 }
 
-.stat {
+.stat-bar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
 }
 
-.stat-label {
-  font-size: 15.5px;
+.stat-bar-icon {
+  flex-shrink: 0;
+  width: 24px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.stat-bar-label {
+  flex-shrink: 0;
+  width: 82px;
+  font-size: 14px;
   color: var(--text-muted);
 }
 
-.stat-value {
-  font-size: 19.5px;
-  font-weight: 600;
+.stat-bar-track {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.25);
+  overflow: hidden;
 }
 
-/* Outfit box */
-.outfit-box {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--card-border);
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.stat-bar-good .stat-bar-fill {
+  background: #22c55e;
+}
+
+.stat-bar-caution .stat-bar-fill {
+  background: #f59e0b;
+}
+
+.stat-bar-bad .stat-bar-fill {
+  background: #ef4444;
+}
+
+.stat-bar-value {
+  flex-shrink: 0;
+  width: 66px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Outfit: category + chips sit inline in the current-weather card's
+   top-right (next to the icon/temperature), filling the empty space
+   there. Tips render separately below the stat bars (see .outfit-tips). */
+.current-outfit-inline {
+  flex: 1 1 180px;
+  max-width: 230px;
 }
 
 .outfit-category {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-weight: 700;
-  font-size: 19.5px;
+  font-size: 15px;
 }
 
 .outfit-items {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .outfit-chip {
   background: var(--accent-soft);
   color: var(--accent);
   border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 17px;
+  padding: 5px 10px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -278,8 +324,9 @@ body[data-period="night"] {
 }
 
 .outfit-tips {
-  margin: 12px 0 0;
-  padding-left: 18px;
+  margin: 16px 0 0;
+  padding: 14px 0 0 18px;
+  border-top: 1px solid var(--card-border);
   font-size: 17px;
   color: var(--text-muted);
   display: flex;
