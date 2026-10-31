@@ -7,9 +7,10 @@ import { getPm10Level, getPm25Level, getUvLevel } from "../utils/airQuality";
 interface Props {
   current: CurrentWeatherData;
   today: DailyWeather;
+  yesterday: DailyWeather;
 }
 
-export function CurrentWeather({ current, today }: Props) {
+export function CurrentWeather({ current, today, yesterday }: Props) {
   const { label, icon } = getWeatherInfo(current.weatherCode);
   const outfit = getOutfitRecommendation(
     current.apparentTemperature,
@@ -28,7 +29,12 @@ export function CurrentWeather({ current, today }: Props) {
           {icon}
         </div>
         <div>
-          <p className="current-label">{label}</p>
+          <div className="current-header">
+            <p className="current-label">{label}</p>
+            <p className="current-yesterday">
+              어제 {Math.round(yesterday.tempMax)}° / {Math.round(yesterday.tempMin)}°
+            </p>
+          </div>
           <p className="current-temp">{Math.round(current.temperature)}°C</p>
           <p className="current-feels">
             체감 {Math.round(current.apparentTemperature)}°C · 최고{" "}

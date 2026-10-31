@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LOCATION, REFRESH_INTERVAL_MS } from "../constants";
 import type { DailyWeather, HourlyPoint, WeatherData } from "../types";
 
-/** Hours of the day sampled for the "yesterday" hourly trend strip. */
-const YESTERDAY_SAMPLE_HOURS = [0, 6, 12, 18];
+/** Hours of the day sampled for the "today" hourly trend strip. */
+const TODAY_SAMPLE_HOURS = [0, 3, 6, 9, 12, 15, 18, 21];
 
 const API_URL = "https://api.open-meteo.com/v1/forecast";
 const AIR_QUALITY_API_URL = "https://air-quality-api.open-meteo.com/v1/air-quality";
@@ -108,11 +108,12 @@ async function fetchWeather(): Promise<WeatherData> {
     .map((_, idx) => toDailyWeather(data.daily, idx + 1));
 
   // Hourly data starts at midnight of the first day (yesterday), one entry
-  // per hour, so indices 0-23 are yesterday's 24 hours.
-  const yesterdayHourly: HourlyPoint[] = YESTERDAY_SAMPLE_HOURS.map((hour) => ({
-    time: data.hourly.time[hour],
-    temperature: data.hourly.temperature_2m[hour],
-    weatherCode: data.hourly.weather_code[hour],
+  // per hour, so today's 24 hours start at index 24 (day 1 * 24h).
+  const TODAY_HOUR_OFFSET = 24;
+  const todayHourly: HourlyPoint[] = TODAY_SAMPLE_HOURS.map((hour) => ({
+    time: data.hourly.time[TODAY_HOUR_OFFSET + hour],
+    temperature: data.hourly.temperature_2m[TODAY_HOUR_OFFSET + hour],
+    weatherCode: data.hourly.weather_code[TODAY_HOUR_OFFSET + hour],
   }));
 
   return {
@@ -129,8 +130,8 @@ async function fetchWeather(): Promise<WeatherData> {
       pm25: airQuality?.pm2_5,
     },
     yesterday,
-    yesterdayHourly,
     today,
+    todayHourly,
     week,
     fetchedAt: new Date().toISOString(),
   };

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Header } from "./components/Header";
 import { CurrentWeather } from "./components/CurrentWeather";
-import { YesterdayWeather } from "./components/YesterdayWeather";
+import { HourlyForecast } from "./components/HourlyForecast";
 import { WeeklyForecast } from "./components/WeeklyForecast";
 import { useWeather } from "./hooks/useWeather";
 import { useClock } from "./hooks/useClock";
@@ -39,10 +39,8 @@ function App() {
 
         {data && (
           <>
-            <div className="today-yesterday-row">
-              <CurrentWeather current={data.current} today={data.today} />
-              <YesterdayWeather yesterday={data.yesterday} hourly={data.yesterdayHourly} />
-            </div>
+            <CurrentWeather current={data.current} today={data.today} yesterday={data.yesterday} />
+            <HourlyForecast hourly={data.todayHourly} />
             <WeeklyForecast week={data.week} />
 
             <footer className="footer">

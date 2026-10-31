@@ -117,17 +117,6 @@ body[data-period="night"] {
   gap: 32px;
 }
 
-/* Today's weather and yesterday's weather sit side by side, each taking
-   half the width. align-items: start keeps each card at its own natural
-   height instead of stretching the much shorter yesterday card to match
-   today's taller one. */
-.today-yesterday-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  align-items: start;
-}
-
 /* Header */
 .header {
   text-align: center;
@@ -194,10 +183,24 @@ body[data-period="night"] {
   font-family: "Noto Color Emoji", sans-serif;
 }
 
+.current-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
 .current-label {
   margin: 0;
   font-size: 19.5px;
   color: var(--text-muted);
+}
+
+.current-yesterday {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .current-temp {
@@ -291,45 +294,21 @@ body[data-period="night"] {
   font-weight: 700;
 }
 
-/* Yesterday */
-.yesterday-summary {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.yesterday-icon {
-  font-size: 30px;
-  font-family: "Noto Color Emoji", sans-serif;
-}
-
-.yesterday-label {
-  margin: 0;
-  font-size: 15px;
-  color: var(--text-muted);
-}
-
-.yesterday-temp {
-  margin: 2px 0 0;
-  font-weight: 700;
-  font-size: 18px;
-}
-
-.yesterday-hourly {
+/* Hourly forecast (today, sampled every 3 hours) */
+.hourly-list {
   list-style: none;
-  margin: 16px 0 0;
-  padding: 14px 0 0;
-  border-top: 1px solid var(--card-border);
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: space-between;
 }
 
-.yesterday-hourly li {
+.hourly-list li {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: 13px;
 }
 
 .hourly-time {
@@ -337,19 +316,13 @@ body[data-period="night"] {
 }
 
 .hourly-icon {
-  font-size: 19px;
+  font-size: 22px;
   font-family: "Noto Color Emoji", sans-serif;
 }
 
 .hourly-temp {
   font-weight: 600;
-  font-size: 14px;
-}
-
-.yesterday-rain {
-  margin: 14px 0 0;
-  font-size: 13px;
-  color: var(--text-muted);
+  font-size: 16px;
 }
 
 /* Weekly forecast */

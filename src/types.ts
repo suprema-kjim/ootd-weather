@@ -31,8 +31,8 @@ export interface HourlyPoint {
 export interface WeatherData {
   current: CurrentWeather;
   yesterday: DailyWeather;
-  yesterdayHourly: HourlyPoint[]; // 00/06/12/18h snapshots, in time order
   today: DailyWeather;
+  todayHourly: HourlyPoint[]; // today's 00/03/06/09/12/15/18/21h snapshots, in time order
   week: DailyWeather[]; // today + next 6 days (7 entries)
   fetchedAt: string;
 }
