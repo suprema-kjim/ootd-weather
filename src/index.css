@@ -336,7 +336,7 @@ body[data-period="night"] {
 
 .week-row {
   display: grid;
-  grid-template-columns: 73px 36.5px 1fr 57px 91px;
+  grid-template-columns: 90px 36.5px 1fr 57px 91px;
   align-items: center;
   gap: 8px;
   padding: 10px 0;
